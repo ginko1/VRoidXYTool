@@ -11,5 +11,7 @@
         public int Width;
         public int Height;
         public float Scale;
+        public float Opacity;
+        public bool transparent;
     }
 }

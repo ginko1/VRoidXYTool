@@ -27,6 +27,7 @@ namespace VRoidXYTool
         public GuideTool GuideTool;
         public LinkTextureTool LinkTextureTool;
 
+        public RayBlocker RayBlocker;
         #region 配置
         public ConfigEntry<bool> RunInBG;
         public ConfigEntry<bool> OnGUICantClick;
@@ -58,6 +59,7 @@ namespace VRoidXYTool
             CameraTool = new CameraTool();
             GuideTool = new GuideTool();
             LinkTextureTool = new LinkTextureTool();
+            RayBlocker = new RayBlocker();
         }
 
         private void Update()
@@ -76,6 +78,7 @@ namespace VRoidXYTool
             // 工具的Update
             CameraTool.Update();
             LinkTextureTool.Update();
+            RayBlocker.Update();
         }
 
         /// <summary>
@@ -107,6 +110,7 @@ namespace VRoidXYTool
                 ES3D.enabled = esActive;
             }
         }
+    
 
         private void OnGUI()
         {
@@ -114,6 +118,11 @@ namespace VRoidXYTool
             {
                 GUI.backgroundColor = Color.black;
                 winRect = GUILayout.Window(666, winRect, WindowFunc, $"宵夜小工具 v{PluginVersion}");
+                RayBlocker.OpenBlocker(winRect);
+            }
+            else
+            {
+                RayBlocker.CloseBlocker();
             }
         }
 

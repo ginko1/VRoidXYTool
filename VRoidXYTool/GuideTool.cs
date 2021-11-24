@@ -20,7 +20,8 @@ namespace VRoidXYTool
         public GuideTool()
         {
             boxPrefab = FileHelper.LoadAsset<GameObject>("guide", "box");
-            guideImageMat = FileHelper.LoadAsset<Material>("guide", "GuideImageMat");
+            //guideImageMat = FileHelper.LoadAsset<Material>("guide", "GuideImageMat");
+            guideImageMat = FileHelper.LoadAsset<Material>("imageMat", "ImageMat");
             guideImagePrefab = FileHelper.LoadAsset<GameObject>("guide", "GuideImagePrefab");
         }
 
@@ -186,6 +187,8 @@ namespace VRoidXYTool
             image.transform.localScale = new Vector3(data.Width / 1000f * data.Scale, data.Height / 1000f * data.Scale, 0);
             image.transform.position = data.Pos.ToVector3();
             image.transform.localEulerAngles = data.Rot.ToVector3();
+            //设置不透明度
+            data.Opacity = 0.5f;
             // 设置guideObject
             guideObject.GO = image;
             guideObject.Transform = image.transform;

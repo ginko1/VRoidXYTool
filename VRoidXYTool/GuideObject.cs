@@ -71,6 +71,14 @@ namespace VRoidXYTool
                 }
                 GUILayout.EndHorizontal();
                 TransformGUIInput();
+
+
+
+                GUILayout.BeginHorizontal();
+                ImageData.transparent = GUILayout.Toggle(ImageData.transparent, "透明");
+                ImageData.Opacity = FloatGUIInput(ImageData.Opacity, "不透明度","opc");
+                GO.GetComponent<Renderer>().material.SetFloat("_Opacity", ImageData.transparent ? ImageData.Opacity : 1);
+                GUILayout.EndHorizontal();
             }
             else
             {
@@ -84,8 +92,18 @@ namespace VRoidXYTool
                 {
                     Transform.localScale = Vector3GUISlider(Transform.localScale, "缩放", 0, 5);
                 }
+
+
                 GUILayout.EndHorizontal();
+
                 TransformGUISlider();
+
+
+                GUILayout.BeginHorizontal(GUI.skin.box);
+                ImageData.transparent = GUILayout.Toggle(ImageData.transparent, "透明模式");
+                ImageData.Opacity = FloatGUISlider(ImageData.Opacity, "不透明度", 0, 1,120);
+                GO.GetComponent<Renderer>().material.SetFloat("_Opacity", ImageData.transparent ? ImageData.Opacity : 1);
+                GUILayout.EndHorizontal();
             }
             GUILayout.EndVertical();
         }
@@ -168,6 +186,16 @@ namespace VRoidXYTool
             GUILayout.BeginHorizontal();
             string label = $"{name}:{f:f3}";
             GUILayout.Label(label, GUILayout.Width(70));
+            f = GUILayout.HorizontalSlider(f, min, max, GUILayout.Width(150));
+            f = (int)(f * 1000) / 1000f;
+            GUILayout.EndHorizontal();
+            return f;
+        }
+        private float FloatGUISlider(float f, string name, float min, float max,float nameWidth)
+        {
+            GUILayout.BeginHorizontal();
+            string label = $"{name}:{f:f3}";
+            GUILayout.Label(label, GUILayout.Width(nameWidth));
             f = GUILayout.HorizontalSlider(f, min, max, GUILayout.Width(150));
             f = (int)(f * 1000) / 1000f;
             GUILayout.EndHorizontal();

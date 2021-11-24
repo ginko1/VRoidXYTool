@@ -99,6 +99,7 @@ namespace VRoidXYTool
                     {
                         NormalGUI();
                     }
+                    CamSaveGUI();
                 }
             }
             catch (Exception e)
@@ -161,6 +162,7 @@ namespace VRoidXYTool
             }
             GUILayout.EndHorizontal();
             GUILayout.EndHorizontal();
+
         }
 
         /// <summary>
@@ -261,6 +263,94 @@ namespace VRoidXYTool
             result[2] = new Vector3(0, 90, 0);
             result[3] = new Vector3(0, 270, 0);
             return result;
+        }
+
+
+        
+        void CamSaveGUI()
+        {
+            GUILayout.Space(16);
+            GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal("相机位置(保存)", GUI.skin.window);
+            if (GUILayout.Button("1"))
+            {
+                SaveCamInfo(CamSave[0]);
+                Debug.Log("save    ----   ");
+            }
+            if (GUILayout.Button("2"))
+            {
+                SaveCamInfo(CamSave[1]);
+            }
+            if (GUILayout.Button("3"))
+            {
+                SaveCamInfo(CamSave[2]);
+            }
+            if (GUILayout.Button("4"))
+            {
+                SaveCamInfo(CamSave[3]);
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal("相机位置(读取)", GUI.skin.window);
+            if (GUILayout.Button("1"))
+            {
+                LoadCamInfo(CamSave[0]);
+            }
+            if (GUILayout.Button("2"))
+            {
+                LoadCamInfo(CamSave[1]);
+            }
+            if (GUILayout.Button("3"))
+            {
+                LoadCamInfo(CamSave[2]);
+            }
+            if (GUILayout.Button("4"))
+            {
+                LoadCamInfo(CamSave[3]);
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
+        }
+
+        class CamInfo
+        {
+            public Vector3 position;
+            public Vector3 rotation;
+            public bool orthographic;
+            public float orthographicSize;
+        }
+        CamInfo[] camSave;
+        CamInfo[] CamSave
+        {
+            get {
+                if (camSave == null)
+                {
+                    Debug.Log("nulll ");
+                    camSave = new CamInfo[4];
+                    camSave[0] = new CamInfo();
+                    camSave[1] = new CamInfo();
+                    camSave[2] = new CamInfo();
+                    camSave[3] = new CamInfo();
+                }
+                return camSave;
+                 }
+        }
+
+        void SaveCamInfo(CamInfo cif)
+        {
+            cif.position = MRTcamera.transform.position;
+            cif.rotation = MRTcamera.transform.eulerAngles;
+            cif.orthographic = MainCamera.orthographic;
+            cif.orthographicSize = MainCamera.orthographicSize;
+        }
+        void LoadCamInfo(CamInfo cif)
+        {
+            MRTcamera.transform.position = cif.position;
+            MRTcamera.transform.eulerAngles = cif.rotation;
+            MainCamera.orthographic = cif.orthographic;
+            if (MainCamera.orthographic)
+            {
+                MainCamera.orthographicSize = cif.orthographicSize;
+            }
         }
     }
 }
